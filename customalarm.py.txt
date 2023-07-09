@@ -1,0 +1,58 @@
+import datetime
+import time
+from playsound import playsound
+
+def input_time():
+    alarm_time = input("Enter the alarm time in HH:MM format: ")
+    alarm_hour = alarm_time.split(":")[0]
+    alarm_minute = alarm_time.split(":")[1]
+    alarm_second = "00"
+
+    return alarm_hour, alarm_minute, alarm_second
+
+def input_message():
+    alarm_message = input("Enter a custom message for the alarm: ")
+    return alarm_message
+
+def input_sound():
+    print("Select a sound for the alarm: ")
+    print("1. Sound 1")
+    print("2. Sound 2")
+    print("3. Sound 3")
+    print("4. Sound 4")
+    print("5. Sound 5")
+    print("6. Add a custom sound")
+
+    selection = int(input("Enter the number of your selection: "))
+    if selection == 6:
+        alarm_sound = input("Enter the path to the sound file: ")
+    else:
+        # Replace the paths below with the paths to your sound files
+        sound_paths = ["sound1.mp3", "sound2.mp3", "sound3.mp3", "sound4.mp3", "sound5.mp3"]
+        alarm_sound = sound_paths[selection - 1]
+
+    return alarm_sound
+
+def alarm(alarm_hour, alarm_minute, alarm_second, alarm_message, alarm_sound):
+    while True:
+        now = datetime.datetime.now()
+        current_hour = now.strftime("%H")
+        current_minute = now.strftime("%M")
+        current_second = now.strftime("%S")
+
+        if alarm_hour == current_hour:
+            if alarm_minute == current_minute:
+                if alarm_second == current_second:
+                    print("Alarm Time: " + alarm_hour + ":" + alarm_minute + ":" + alarm_second)
+                    print(alarm_message)
+                    playsound(alarm_sound)
+                    break
+
+def main():
+    alarm_hour, alarm_minute, alarm_second = input_time()
+    alarm_message = input_message()
+    alarm_sound = input_sound()
+    alarm(alarm_hour, alarm_minute, alarm_second, alarm_message, alarm_sound)
+
+if __name__ == "__main__":
+    main()
